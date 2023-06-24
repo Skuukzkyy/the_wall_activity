@@ -15,7 +15,7 @@ class CommentsController {
             console.log("error");
         }
         else{
-            let result = await CommentModel.create(request.session.user.id, message_id, comment);
+            let result = await CommentModel.create({ user_id: request.session.user.id, message_id, comment });
             console.log(result);
         }
 

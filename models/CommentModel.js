@@ -2,15 +2,13 @@ import DatabaseQueryModel from "./DatabaseQueryModel.js";
 
 class CommentModel {
 
-    create = async (user_id, message_id, comment) => {
+    create = async (comment_data) => {
+
         const response_data = { status: false, result: {}, error: null };
-        const query = `
-            INSERT INTO comments(user_id, message_id, comment)
-            VALUES(?, ?, ?);
-        `;
+        const query = "INSERT INTO comments SET ?";
 
         try{
-            const result = await DatabaseQueryModel.executeQuery(query, [user_id, message_id, comment]);
+            const result = await DatabaseQueryModel.executeQuery(query, comment_data);
             if(result){
                 response_data.status = true;
                 response_data.result = result;
@@ -25,10 +23,7 @@ class CommentModel {
 
     destroy = async (comment_id) => {
         const response_data = { status: false, result: {}, error: null };
-        const query = `
-            DELETE FROM comments
-            WHERE id = ?
-        `;
+        const query = "DELETE FROM comments WHERE id = ?";
 
         try{
             const result = await DatabaseQueryModel.executeQuery(query, [comment_id]);

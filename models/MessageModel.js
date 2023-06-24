@@ -2,15 +2,12 @@ import DatabaseQueryModel from "./DatabaseQueryModel.js";
 
 class MessageModel {
 
-    create = async (user_id, message) => {
+    create = async (message_data) => {
         const response_data = { status: false, result: {}, error: null };
-        const query = `
-            INSERT INTO messages(user_id, message)
-            VALUES(?, ?);
-        `;
+        const query = "INSERT INTO messages SET ?;";
 
         try{
-            const result = await DatabaseQueryModel.executeQuery(query, [user_id, message]);
+            const result = await DatabaseQueryModel.executeQuery(query, message_data);
             if(result){
                 response_data.status = true;
                 response_data.result = result;

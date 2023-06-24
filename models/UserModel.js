@@ -26,8 +26,7 @@ class UserModel {
     register = async (user_data) => {
         const response_data = { status: false, result: {}, error: null };
         const query = `
-            INSERT INTO users(first_name, last_name, email, password)
-            VALUES(?, ?, ?, ?);
+            INSERT INTO users SET ?
         `;
 
         try{

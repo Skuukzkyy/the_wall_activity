@@ -44,7 +44,7 @@ class UsersController {
             console.log("error");
         }
         else{
-            let result = await UserModel.register([first_name, last_name, email, password]);
+            let result = await UserModel.register({ first_name, last_name, email, password });
             console.log(result);
         }
 

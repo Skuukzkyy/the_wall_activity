@@ -15,7 +15,7 @@ class MessagesController {
             console.log("error");
         }
         else{
-            let result = await MessageModel.create(request.session.user.id, message);
+            let result = await MessageModel.create({ user_id: request.session.user.id, message });
             console.log(result);
         }
 
