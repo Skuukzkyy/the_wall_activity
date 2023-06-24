@@ -1,6 +1,5 @@
 import mysql from 'mysql2';
 import { DATABASE_CONFIG } from '../configs/constants.js'
-// const { DATABASE_CONFIG } = require('../configs/constants');
 
 
 class DatabaseQueryModel{
@@ -10,8 +9,8 @@ class DatabaseQueryModel{
 
     executeQuery(userQuery, values){
         const query = mysql.format(userQuery, values);
-
         const connection = this.connectDb();
+
         return new Promise((resolve, reject) => {
             connection.query(query, (err, rows) => {
                 this.close(connection);

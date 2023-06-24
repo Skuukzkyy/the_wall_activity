@@ -9,14 +9,14 @@ class UsersController {
             return response.redirect("/");
         }
 
-        const data = {
+        let data = {
             user: {
                 id: request.session.user.id,
                 first_name: request.session.user.first_name
             }
         }
 
-        const result = await MessageModel.getAllMessagesWithComments();
+        let result = await MessageModel.getAllMessagesWithComments();
         if(result.status){
             data.messages_comments = result.result;
         }
@@ -37,14 +37,14 @@ class UsersController {
             return response.redirect("/wall");
         }
         
-        const { first_name, last_name, email, password, confirm_password } = request.body;
-        const is_empty = isEmpty(first_name, last_name, email, password, confirm_password);
+        let { first_name, last_name, email, password, confirm_password } = request.body;
+        let is_empty = isEmpty(first_name, last_name, email, password, confirm_password);
 
         if(is_empty || password !== confirm_password){
             console.log("error");
         }
         else{
-            const result = await UserModel.register([first_name, last_name, email, password]);
+            let result = await UserModel.register([first_name, last_name, email, password]);
             console.log(result);
         }
 

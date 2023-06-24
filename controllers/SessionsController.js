@@ -8,14 +8,14 @@ class SessionsController {
             return response.redirect("/wall");
         }
 
-        const { email, password } = request.body;
+        let { email, password } = request.body;
         
         if(isEmpty(email, password)){
             console.log("error");
             return response.redirect("/");
         }
         
-        const result = await UserModel.login([email, password]);
+        let result = await UserModel.login([email, password]);
         if(result.status){
             request.session.user = {
                 id: result.result.id,

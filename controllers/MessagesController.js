@@ -8,15 +8,14 @@ class MessagesController {
             return response.redirect("/");
         }
         
-        const { message } = request.body;
-        const user_id = request.session.user.id;
-        const is_empty = isEmpty(message);
+        let { message } = request.body;
+        let is_empty = isEmpty(message);
 
         if(is_empty){
             console.log("error");
         }
         else{
-            const result = await MessageModel.create(user_id, message);
+            let result = await MessageModel.create(request.session.user.id, message);
             console.log(result);
         }
 
@@ -28,8 +27,8 @@ class MessagesController {
             return response.redirect("/");
         }
 
-        const { message_id } = request.body;
-        const result = await MessageModel.destroy(message_id);
+        let { message_id } = request.body;
+        let result = await MessageModel.destroy(message_id);
         console.log(result)
         if(result.status){
         console.log("deleted");

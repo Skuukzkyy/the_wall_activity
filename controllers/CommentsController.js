@@ -8,15 +8,14 @@ class CommentsController {
             return response.redirect("/");
         }
         
-        const { message_id, comment } = request.body;
-        const user_id = request.session.user.id;
-        const is_empty = isEmpty(comment);
+        let { message_id, comment } = request.body;
+        let is_empty = isEmpty(comment);
 
         if(is_empty){
             console.log("error");
         }
         else{
-            const result = await CommentModel.create(user_id, message_id, comment);
+            let result = await CommentModel.create(request.session.user.id, message_id, comment);
             console.log(result);
         }
 
@@ -28,9 +27,10 @@ class CommentsController {
             return response.redirect("/");
         }
 
-        const { comment_id } = request.body;
-        const result = await CommentModel.destroy(comment_id);
+        let { comment_id } = request.body;
+        let result = await CommentModel.destroy(comment_id);
         console.log(result)
+        
         if(result.status){
         console.log("deleted");
         }
