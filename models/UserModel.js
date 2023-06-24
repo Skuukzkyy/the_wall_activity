@@ -25,9 +25,7 @@ class UserModel {
 
     register = async (user_data) => {
         const response_data = { status: false, result: {}, error: null };
-        const query = `
-            INSERT INTO users SET ?
-        `;
+        const query = "INSERT INTO users SET ?";
 
         try{
             const result = await DatabaseQueryModel.executeQuery(query, user_data);

@@ -1,4 +1,4 @@
-import { isEmpty } from "../helpers/isEmpty.js";
+import { checkFields } from "../helpers/checkFields.js";
 import CommentModel from "../models/CommentModel.js";
 
 class CommentsController {
@@ -7,15 +7,16 @@ class CommentsController {
         if(request.session.user === undefined){
             return response.redirect("/");
         }
-        
-        let { message_id, comment } = request.body;
-        let is_empty = isEmpty(comment);
 
-        if(is_empty){
+        let check_fields = checkFields(["comment", "message_id"], request.body);
+
+        if(!check_fields.status){
             console.log("error");
         }
         else{
-            let result = await CommentModel.create({ user_id: request.session.user.id, message_id, comment });
+            // let { message_id, comment } = check_fields.result;
+            // let result = await CommentModel.create({ user_id: request.session.user.id, message_id, comment });
+            let result = await CommentModel.create({ user_id: request.session.user.id, message_id: check_fields.result.message_id, comment: check_fields.result.comment });
             console.log(result);
         }
 

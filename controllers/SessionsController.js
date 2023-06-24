@@ -1,4 +1,4 @@
-import { isEmpty } from "../helpers/isEmpty.js";
+import { checkFields } from "../helpers/checkFields.js";
 import UserModel from "../models/UserModel.js";
 
 class SessionsController {
@@ -8,14 +8,15 @@ class SessionsController {
             return response.redirect("/wall");
         }
 
-        let { email, password } = request.body;
-        
-        if(isEmpty(email, password)){
-            console.log("error");
+        let check_fields = checkFields(["email", "password"], request.body);
+
+        if(!check_fields.status){
+            console.log(check_fields.error);
             return response.redirect("/");
         }
         
-        let result = await UserModel.login([email, password]);
+        let result = await UserModel.login([check_fields.result.email, check_fields.result.password]);
+        
         if(result.status){
             request.session.user = {
                 id: result.result.id,

@@ -1,4 +1,4 @@
-import { isEmpty } from "../helpers/isEmpty.js";
+import { checkFields } from "../helpers/checkFields.js";
 import UserModel from "../models/UserModel.js";
 import MessageModel from "../models/MessageModel.js";
 
@@ -37,16 +37,16 @@ class UsersController {
             return response.redirect("/wall");
         }
         
-        let { first_name, last_name, email, password, confirm_password } = request.body;
-        let is_empty = isEmpty(first_name, last_name, email, password, confirm_password);
-
-        if(is_empty || password !== confirm_password){
-            console.log("error");
+        let check_fields = checkFields(["first_name", "last_name", "email", "password", "confirm_password"], request.body);
+    
+        if(!check_fields.status || check_fields.result.password !== check_fields.result.confirm_password){
+            console.log("error", check_fields.error);
         }
         else{
-            let result = await UserModel.register({ first_name, last_name, email, password });
+            let result = await UserModel.register({ first_name: check_fields.result.first_name, last_name: check_fields.result.last_name, email: check_fields.result.email, password: check_fields.result.password });
             console.log(result);
         }
+
 
         response.redirect("/");
     }

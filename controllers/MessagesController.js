@@ -1,4 +1,4 @@
-import { isEmpty } from "../helpers/isEmpty.js";
+import { checkFields } from "../helpers/checkFields.js";
 import MessageModel from "../models/MessageModel.js";
 
 class MessagesController {
@@ -8,14 +8,13 @@ class MessagesController {
             return response.redirect("/");
         }
         
-        let { message } = request.body;
-        let is_empty = isEmpty(message);
+        let check_fields = checkFields(["message"], request.body);
 
-        if(is_empty){
+        if(!check_fields.status){
             console.log("error");
         }
         else{
-            let result = await MessageModel.create({ user_id: request.session.user.id, message });
+            let result = await MessageModel.create({ user_id: request.session.user.id, message: check_fields.result.message });
             console.log(result);
         }
 
