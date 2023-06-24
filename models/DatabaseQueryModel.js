@@ -14,6 +14,7 @@ class DatabaseQueryModel{
         return new Promise((resolve, reject) => {
             connection.query(query, (err, rows) => {
                 this.close(connection);
+                
                 if(err){
                     resolve(err);
                 }else{

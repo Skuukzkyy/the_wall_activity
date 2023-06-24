@@ -3,11 +3,11 @@ import DatabaseQueryModel from "./DatabaseQueryModel.js";
 class MessageModel {
 
     create = async (message_data) => {
-        const response_data = { status: false, result: {}, error: null };
-        const query = "INSERT INTO messages SET ?;";
+        let response_data = { status: false, result: {}, error: null };
+        let query = "INSERT INTO messages SET ?;";
 
         try{
-            const result = await DatabaseQueryModel.executeQuery(query, message_data);
+            let result = await DatabaseQueryModel.executeQuery(query, message_data);
             if(result){
                 response_data.status = true;
                 response_data.result = result;
@@ -21,7 +21,7 @@ class MessageModel {
     }
 
     getAllMessagesWithComments = async () => {
-        const response_data = { status: false, result: {}, error: null };
+        let response_data = { status: false, result: {}, error: null };
         
         let query = `
             SELECT 
@@ -50,7 +50,7 @@ class MessageModel {
         `;
 
         try{
-            const result = await DatabaseQueryModel.executeQuery(query);
+            let result = await DatabaseQueryModel.executeQuery(query);
             if(result){
                 response_data.status = true;
                 response_data.result = result;
@@ -64,14 +64,11 @@ class MessageModel {
     }
 
     destroy = async (message_id) => {
-        const response_data = { status: false, result: {}, error: null };
-        const query = `
-            DELETE FROM messages
-            WHERE id = ?
-        `;
+        let response_data = { status: false, result: {}, error: null };
+        let query = "DELETE FROM messages WHERE id = ?;";
 
         try{
-            const result = await DatabaseQueryModel.executeQuery(query, [message_id]);
+            let result = await DatabaseQueryModel.executeQuery(query, [message_id]);
             if(result){
                 response_data.status = true;
                 response_data.result = result;
