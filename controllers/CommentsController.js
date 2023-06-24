@@ -4,10 +4,6 @@ import CommentModel from "../models/CommentModel.js";
 class CommentsController {
 
     create = async (request, response) => {
-        if(request.session.user === undefined){
-            return response.redirect("/");
-        }
-
         let check_fields = checkFields(["comment", "message_id"], request.body);
 
         if(!check_fields.status){
@@ -24,10 +20,6 @@ class CommentsController {
     }
 
     destroy = async (request, response) => {
-        if(request.session.user === undefined){
-            return response.redirect("/");
-        }
-
         let { comment_id } = request.body;
         let result = await CommentModel.destroy(comment_id);
         console.log(result)

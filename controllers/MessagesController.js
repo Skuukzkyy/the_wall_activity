@@ -4,10 +4,6 @@ import MessageModel from "../models/MessageModel.js";
 class MessagesController {
 
     create = async (request, response) => {
-        if(request.session.user === undefined){
-            return response.redirect("/");
-        }
-        
         let check_fields = checkFields(["message"], request.body);
 
         if(!check_fields.status){
@@ -22,10 +18,6 @@ class MessagesController {
     }
 
     destroy = async (request, response) => {
-        if(request.session.user === undefined){
-            return response.redirect("/");
-        }
-
         let { message_id } = request.body;
         let result = await MessageModel.destroy(message_id);
         console.log(result)

@@ -1,4 +1,6 @@
 import express from "express";
+import isUserAuthorized from "../middlewares/isUserAuthorized.js";
+import isUserLoggedIn from "../middlewares/isUserLoggedIn.js";
 import UsersController from "../controllers/UsersController.js";
 import SessionsController from "../controllers/SessionsController.js";
 import CommentsController from "../controllers/CommentsController.js";
@@ -6,20 +8,20 @@ import MessagesController from "../controllers/MessagesController.js";
 
 const router = express.Router();
 
-router.get("/", UsersController.loginRegister);
-router.get("/wall", UsersController.index);
+router.get("/", isUserLoggedIn, UsersController.loginRegister);
+router.get("/wall", isUserAuthorized, UsersController.index);
 
 // register
-router.post("/users", UsersController.create);
+router.post("/users", isUserLoggedIn, UsersController.create);
 
 // login
-router.post("/sessions", SessionsController.create);
+router.post("/sessions", isUserLoggedIn, SessionsController.create);
 
 // post
-router.post("/messages", MessagesController.create);
-router.post("/messages/destroy", MessagesController.destroy);
+router.post("/messages", isUserAuthorized, MessagesController.create);
+router.post("/messages/destroy", isUserAuthorized, MessagesController.destroy);
 
 // comment
-router.post("/comments", CommentsController.create);
-router.post("/comments/destroy", CommentsController.destroy);
+router.post("/comments", isUserAuthorized, CommentsController.create);
+router.post("/comments/destroy", isUserAuthorized, CommentsController.destroy);
 export default router;

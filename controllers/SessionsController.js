@@ -4,10 +4,6 @@ import UserModel from "../models/UserModel.js";
 class SessionsController {
 
     create = async (request, response) => {
-        if(request.session.user){
-            return response.redirect("/wall");
-        }
-
         let check_fields = checkFields(["email", "password"], request.body);
 
         if(!check_fields.status){
